@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 const URL_API = "https://jsonplaceholder.typicode.com";
+
 // 1. Crear una función para solicitar la data al servidor (hacer fetch de datos).
 const fetchPosts = async () => {
   const response = await fetch(`${URL_API}/posts`);
@@ -27,7 +28,6 @@ const fetchDataFromJsonPlaceHolder = async (url) => {
 };
 
 // Fin de paso 1.
-
 const JsonPlaceHolderCommentList = () => {
   // 3.1 crear un estado con useState, esta funcion retorna 2 variables, una variable que contiene el estado y otra variable que contiene la función que me permite modificar ese estado
   const [commentList, setCommentList] = useState([]);
