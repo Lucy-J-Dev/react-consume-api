@@ -1,3 +1,4 @@
+import FormExample from "./components/FormExample";
 import InputExample from "./components/InputExample";
 import JsonPlaceHolderCommentList from "./components/JsonPlaceHolderCommentList";
 import JsonPlaceHolderComments from "./components/JsonPlaceHolderComments";
@@ -7,12 +8,13 @@ import JsonPlaceHolderPostList from "./components/JsonPlaceHolderPostList";
 const App = () => {
   return (
     <div>
-      <h1>Fetch de datos</h1>
+      {/* <h1>Fetch de datos</h1> */}
       {/* <JsonPlaceHolderPostList /> */}
       {/* <JsonPlaceHolderPhotoList /> */}
       {/* <JsonPlaceHolderCommentList /> */}
-      <JsonPlaceHolderComments />
-      {/* <InputExample /> */}
+      {/* <JsonPlaceHolderComments /> */}
+      <InputExample />
+      {/* <FormExample /> */}
     </div>
   );
 };
