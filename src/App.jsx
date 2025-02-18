@@ -13,8 +13,8 @@ const App = () => {
       {/* <JsonPlaceHolderPhotoList /> */}
       {/* <JsonPlaceHolderCommentList /> */}
       {/* <JsonPlaceHolderComments /> */}
-      <InputExample />
-      {/* <FormExample /> */}
+      {/* <InputExample /> */}
+      <FormExample />
     </div>
   );
 };
