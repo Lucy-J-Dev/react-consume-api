@@ -6,22 +6,42 @@ const initialValue = {
   email: "",
 };
 
-const initialErrors = {};
+const URL_API = "http://localhost:3000/users";
+
+// Funcion que permite consultar el API
+const registerUser = async ({ name, age, email }) => {
+  const response = await fetch(URL_API, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name: name,
+      age: age,
+      email: email,
+    }),
+  });
+  const result = await response.json();
+  return result;
+};
 
 const FormExample = () => {
   const [formData, setFormData] = useState(initialValue);
-  const [formErrors, setFormErrors] = useState(initialErrors);
+  const [formErrors, setFormErrors] = useState({});
   const [successfulMessage, setSuccessfulMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
+  // Funcion que se encarga de manejar el cambio en los inputs
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  // Funcion que se encarga de manejar el boton submit del formulario
   const handleForm = (event) => {
     event.preventDefault();
 
     setSuccessfulMessage("");
+    setErrorMessage("");
 
     // Validar el formulario
     const errors = {};
@@ -49,8 +69,19 @@ const FormExample = () => {
     const existenErrores = Object.keys(errors).length > 0;
 
     if (!existenErrores) {
-      setSuccessfulMessage("Su formulario fue completado correctamente");
-      setFormData(initialValue);
+      setLoading(true);
+
+      registerUser(formData)
+        .then((result) => {
+          setSuccessfulMessage(
+            `El usuario con identificador ${result.id} fue creado`
+          );
+          setFormData(initialValue);
+        })
+        .catch(() => {
+          setErrorMessage("Problemas con el servidor");
+        })
+        .finally(() => setLoading(false));
     }
   };
 
@@ -66,11 +97,7 @@ const FormExample = () => {
             name="name"
             id="name"
             value={formData.name}
-            onChange={(event) => {
-              const valor = event.target.value;
-              setFormData({ ...formData, name: valor });
-              console.log(formData.name);
-            }}
+            onChange={handleInputChange}
           />
           {formErrors.name && (
             <div>
@@ -109,9 +136,19 @@ const FormExample = () => {
           )}
         </div>
         <button type="submit">Registrar</button>
+        {loading && (
+          <div>
+            <p style={{ color: "violet" }}>Cargando...</p>
+          </div>
+        )}
         {successfulMessage && (
           <div>
             <p style={{ color: "green" }}>{successfulMessage}</p>
+          </div>
+        )}
+        {errorMessage && (
+          <div>
+            <p style={{ color: "tomato" }}>{errorMessage}</p>
           </div>
         )}
       </form>
